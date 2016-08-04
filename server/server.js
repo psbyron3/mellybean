@@ -1,3 +1,4 @@
+var cool = require('cool-asci-faces');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -8,7 +9,7 @@ var port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-app.use(express.static('../client'));
+app.use(express.static(path.join(__dirname, '../client')));
 
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -20,6 +21,10 @@ app.use(function(req, res, next) {
 
 app.get('*', function (request, response) {
   response.sendFile(path.resolve(__dirname, './client', 'index.html'));
+});
+
+app.get('/cool', function(request, response) {
+  response.send(cool());
 });
 
 app.listen(port);
